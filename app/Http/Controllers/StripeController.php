@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
+
+class StripeController extends Controller
+{
+    public function createCheckoutSession(Request $request)
+    {
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        $lineItems = collect($request->cart)->map(function ($item) {
+            return [
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => ['name' => $item['name']],
+                    'unit_amount' => $item['price'] * 100, // cents
+                ],
+                'quantity' => $item['quantity'],
+            ];
+        })->toArray();
+
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => config('services.stripe.success_url'),
+            'cancel_url' => config('services.stripe.cancel_url'),
+        ]);
+
+        return redirect($session->url);
+    }
+}
