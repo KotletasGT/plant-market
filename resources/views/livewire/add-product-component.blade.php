@@ -68,58 +68,60 @@
 
     <h2 class="text-xl font-bold text-gray-800 mb-4">Existing Products</h2>
 
-@foreach ($products as $product)
-    <div class="p-4 mb-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
-        <div class="flex justify-between items-start">
-            <div class="w-full space-y-2">
-                <div class="mb-2">
-                    <img src="{{ asset('storage/' . $product->image) }}" style="width: 240px; height: 180px; object-fit: cover;" class="rounded">
+    @forelse ($products as $product)
+        <div class="p-4 mb-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+            <div class="flex justify-between items-start">
+                <div class="w-full space-y-2">
+                    <div class="mb-2">
+                        <img src="{{ asset('storage/' . $product->image) }}" style="width: 240px; height: 180px; object-fit: cover;" class="rounded">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Name:</label>
+                        <input type="text" wire:model.defer="editTitle.{{ $product->id }}" class="w-full mt-1 px-3 py-2 border border-gray-300 rounded text-sm" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Description:</label>
+                        <textarea wire:model.defer="editDescription.{{ $product->id }}" class="w-full mt-1 px-3 py-2 border border-gray-300 rounded text-sm resize-none" rows="3"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Price ($):</label>
+                        <input type="number" step="0.01" wire:model.defer="editPrice.{{ $product->id }}" class="w-32 mt-1 px-3 py-2 border border-gray-300 rounded text-sm" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Category:</label>
+                        <select wire:model.defer="editCategory.{{ $product->id }}" class="w-full mt-1 px-3 py-2 border border-gray-300 rounded text-sm">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Stock:</label>
+                        <input type="number" wire:model.defer="stockValues.{{ $product->id }}" class="w-24 mt-1 px-3 py-2 border border-gray-300 rounded text-sm" />
+                    </div>
+
+                    <div class="flex space-x-2 items-center mt-2">
+                        <input type="file" wire:model="newPhoto.{{ $product->id }}" class="text-sm" />
+                        <button wire:click="updateProductImage({{ $product->id }})" class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 text-sm">Change Photo</button>
+                    </div>
+
+                    <div class="mt-2">
+                        <button wire:click="updateProduct({{ $product->id }})" class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 text-sm">Update</button>
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Name:</label>
-                    <input type="text" wire:model.defer="editTitle.{{ $product->id }}" class="w-full mt-1 px-3 py-2 border border-gray-300 rounded text-sm" />
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Description:</label>
-                    <textarea wire:model.defer="editDescription.{{ $product->id }}" class="w-full mt-1 px-3 py-2 border border-gray-300 rounded text-sm resize-none" rows="3"></textarea>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Price ($):</label>
-                    <input type="number" step="0.01" wire:model.defer="editPrice.{{ $product->id }}" class="w-32 mt-1 px-3 py-2 border border-gray-300 rounded text-sm" />
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Category:</label>
-                    <select wire:model.defer="editCategory.{{ $product->id }}" class="w-full mt-1 px-3 py-2 border border-gray-300 rounded text-sm">
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Stock:</label>
-                    <input type="number" wire:model.defer="stockValues.{{ $product->id }}" class="w-24 mt-1 px-3 py-2 border border-gray-300 rounded text-sm" />
-                </div>
-
-                <div class="flex space-x-2 items-center mt-2">
-                    <input type="file" wire:model="newPhoto.{{ $product->id }}" class="text-sm" />
-                    <button wire:click="updateProductImage({{ $product->id }})" class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 text-sm">Change Photo</button>
-                </div>
-
-                <div class="mt-2">
-                    <button wire:click="updateProduct({{ $product->id }})" class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 text-sm">Update</button>
-                </div>
+                <button wire:click="deleteProduct({{ $product->id }})" class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 text-sm">
+                    Remove
+                </button>
             </div>
-
-            <button wire:click="deleteProduct({{ $product->id }})" class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 text-sm">
-                Remove
-            </button>
         </div>
-    </div>
-@endforeach
+    @empty
+        <p class="text-gray-500 text-center">No products added yet.</p>
+    @endforelse
 
 </div>

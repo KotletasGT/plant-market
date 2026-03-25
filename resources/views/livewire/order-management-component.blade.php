@@ -19,7 +19,7 @@
             </thead>
 
             <tbody class="divide-y divide-gray-100">
-                @foreach ($orders as $order)
+                @forelse ($orders as $order)
                     <tr class="hover:bg-gray-50">
                         <td class="px-4 py-2">{{ $order->id }}</td>
                         <td class="px-4 py-2">{{ $order->product->title }}</td>
@@ -51,7 +51,11 @@
                             </button>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="9" class="text-center py-4 text-gray-500">No orders found.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

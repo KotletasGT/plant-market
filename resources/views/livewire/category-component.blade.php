@@ -25,7 +25,7 @@
     @endif
 
     <ul class="divide-y divide-gray-200">
-        @foreach ($categories as $category)
+        @forelse ($categories as $category)
         <li class="py-2 flex justify-between items-center text-gray-700">
             <span>{{ $category->name }}</span>
             <button
@@ -35,7 +35,9 @@
                 Remove
             </button>
         </li>
-    @endforeach
-</ul>
+        @empty
+        <li class="py-2 text-gray-500 text-center">No categories added yet.</li>
+        @endforelse
+    </ul>
 
 </div>

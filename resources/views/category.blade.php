@@ -3,7 +3,7 @@
         <h1 class="text-center mt-5 mb-4">Category</h1>
 
         <div class="row">
-            @foreach ($products as $product)
+            @forelse ($products as $product)
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="product_card">
                         <img
@@ -32,7 +32,9 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <p class="text-center text-gray-500">No products in this category.</p>
+            @endforelse
         </div>
     </div>
 </x-layouts.app>

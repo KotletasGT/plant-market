@@ -8,7 +8,7 @@
     @endif
 
     <div class="row">
-        @foreach ($products as $product)
+        @forelse ($products as $product)
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="product_card">
                     <img
@@ -37,6 +37,8 @@
                     </div>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <p class="text-center text-gray-500">No products available.</p>
+        @endforelse
     </div>
 </div>
