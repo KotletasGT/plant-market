@@ -24,6 +24,8 @@
                 <span class="font-medium">{{ $product->category->name ?? 'Uncategorized' }}</span>
             </p>
 
+            <p class="text-sm text-gray-500">Added by: {{ $adder }}</p>
+
             <p class="text-gray-600">{{ $product->description }}</p>
 
             <p class="text-lg text-gray-700">In Stock: 

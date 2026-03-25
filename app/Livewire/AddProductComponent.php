@@ -68,6 +68,8 @@ class AddProductComponent extends Component
 
             'image' => $path,
 
+            'user_id' => auth('admin')->check() ? auth('admin')->id() : null,
+
         ]);
 
         $this->reset(['title', 'description', 'price', 'image', 'category_id']);

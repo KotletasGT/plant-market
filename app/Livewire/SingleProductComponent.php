@@ -4,11 +4,14 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Product;
+use App\Models\User;
+use App\Models\Admin;
 
 class SingleProductComponent extends Component
 {
     public $product;
     public $rating, $comment;
+    public $adder;
 
     /**
 
@@ -21,6 +24,17 @@ class SingleProductComponent extends Component
     {
 
         $this->product = Product::findOrFail($id);
+
+        $this->adder = 'Unknown';
+        if ($this->product->user_id) {
+            $user = User::find($this->product->user_id);
+            if ($user) {
+                $this->adder = $user->name;
+            } else {
+                $admin = Admin::find($this->product->user_id);
+                $this->adder = $admin ? $admin->name : 'Unknown';
+            }
+        }
 
     }
 
