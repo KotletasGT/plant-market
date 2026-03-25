@@ -4,9 +4,14 @@ namespace App\Livewire;
 
 use App\Models\Product;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class BrowseProductsComponent extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
     public $sortOption = '';
 
     public function addToCart($productId)
@@ -66,7 +71,7 @@ class BrowseProductsComponent extends Component
         }
 
         return view('livewire.browse-products-component', [
-            'products' => $products->get(),
+            'products' => $products->paginate(12),
         ])->layout('components.layouts.app');
     }
 }

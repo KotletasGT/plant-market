@@ -7,9 +7,9 @@
         </div>
     @endif
 
-    <div class="row">
+    <div class="row g-2">
         @forelse ($products as $product)
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-3 d-flex justify-content-center">
                 <div class="product_card">
                     <img
                         src="{{ asset('storage/' . $product->image) }}"
@@ -40,5 +40,9 @@
         @empty
             <p class="text-center text-gray-500">No products available.</p>
         @endforelse
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        {{ $products->links() }}
     </div>
 </div>
