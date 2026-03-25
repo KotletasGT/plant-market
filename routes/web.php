@@ -15,6 +15,7 @@ use App\Http\Controllers\CategoryController;
 use App\Livewire\AdminOverview;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\PaymentController;
+use App\Livewire\UsersComponent;
 
 /*Route::get('/', function () {
     //return view('welcome');
@@ -37,6 +38,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/add-product', AddProductComponent::class)->name('admin.add-product');
 
     Route::get('/admin/orders', OrderManagementComponent::class)->name('admin.orders');
+
+    Route::get('/admin/users', UsersComponent::class)->name('admin.users');
 
 //    Route::get('/admin/users', UsersComponent::class)->name('admin.users');
 });

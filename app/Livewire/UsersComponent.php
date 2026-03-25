@@ -13,4 +13,18 @@ class UsersComponent extends Component
 
         return view('livewire.users-component', compact('users'))->layout('components.layouts.admin');
     }
+
+    public function deleteUser($userId)
+    {
+        $user = User::find($userId);
+
+        if (!$user) {
+            session()->flash('error', 'User not found.');
+            return;
+        }
+
+        $user->delete();
+
+        session()->flash('message', 'User deleted successfully.');
+    }
 }

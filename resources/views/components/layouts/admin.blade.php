@@ -76,7 +76,7 @@
           </li>
 
           <li class="hover">
-            <a href="{{route('admin.logout')}}" class="">
+            <a href="{{route('admin.users')}}" class="">
               <i class="fa-solid fa-users"></i>
               Users
             </a>
