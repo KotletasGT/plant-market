@@ -44,6 +44,11 @@ Route::middleware('auth:admin')->group(function () {
 //    Route::get('/admin/users', UsersComponent::class)->name('admin.users');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/user/add-product', \App\Livewire\UserAddProductComponent::class)->name('user.add-product');
+    Route::get('/cart', CartComponent::class)->name('cart');
+});
+
 //Route::get('/cart', function () {
 //    return view('components.layouts.cart')
 //});

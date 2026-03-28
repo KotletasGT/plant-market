@@ -74,6 +74,7 @@
             </div>
             @auth
             <a href="{{route('cart')}}">Cart</a>
+            <a href="{{route('user.add-product')}}">My Products</a>
             <a href="{{route('logout')}}">Logout</a>
             <a href="{{route('profile.edit')}}">Profile</a>
             @else
