@@ -20,7 +20,9 @@ class CartComponent extends Component
 
     public $total = 0;
 
-    public $address;
+    public $city;
+    public $street;
+    public $house;
 
     public function mount()
 
@@ -96,9 +98,17 @@ class CartComponent extends Component
 
     }
 
-    if (strlen($this->address) > 100) {
+    if (strlen($this->city) < 1 || strlen($this->street) < 1 || strlen($this->house) < 1) {
 
-        session()->flash('error', 'Address cannot be longer than 100 characters.');
+        session()->flash('error', 'City, street, and house must be provided.');
+
+        return;
+
+    }
+
+    if (strlen($this->city) > 50 || strlen($this->street) > 100 || strlen($this->house) > 20) {
+
+        session()->flash('error', 'City max 50 chars, street max 100 chars, house max 20 chars.');
 
         return;
 
@@ -131,9 +141,11 @@ class CartComponent extends Component
 
             'total_price' => $productTotal,
 
-            'address' => $this->address,
+            'city' => $this->city,
 
-//	    'address' => $address, //
+            'street' => $this->street,
+
+            'house' => $this->house,
 
             'status' => 'pending',
 

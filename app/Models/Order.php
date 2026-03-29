@@ -22,7 +22,11 @@ class Order extends Model
 
         'payment',
 
-	'address',
+	'city',
+
+	'street',
+
+	'house',
 
     ];
 

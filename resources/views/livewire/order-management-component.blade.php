@@ -13,7 +13,9 @@
                     <th class="px-4 py-2">Total Price</th>
                     <th class="px-4 py-2">User</th>
                     <th class="px-4 py-2">Status</th>
-                    <th class="px-4 py-2">Address</th>
+                    <th class="px-4 py-2">City</th>
+                    <th class="px-4 py-2">Street</th>
+                    <th class="px-4 py-2">House</th>
                     <th class="px-4 py-2">Actions</th>
                 </tr>
             </thead>
@@ -35,7 +37,9 @@
                                 {{ ucfirst($order->status) }}
                             </span>
                         </td>
-                        <td class="px-4 py-2">{{ $order->address }}</td>
+                        <td class="px-4 py-2">{{ $order->city }}</td>
+                        <td class="px-4 py-2">{{ $order->street }}</td>
+                        <td class="px-4 py-2">{{ $order->house }}</td>
                         <td class="px-4 py-2 space-x-2">
                             <button
                                 wire:click="approveOrder({{ $order->id }})"
@@ -53,7 +57,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="9" class="text-center py-4 text-gray-500">No orders found.</td>
+                        <td colspan="11" class="text-center py-4 text-gray-500">No orders found.</td>
                     </tr>
                 @endforelse
             </tbody>
