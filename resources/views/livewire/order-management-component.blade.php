@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-bold text-gray-800 mb-6">Order Management</h1>
 
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200 text-sm text-left">
+        <table class="admin-table min-w-full divide-y divide-gray-200 text-sm text-left">
             <thead class="bg-gray-100 text-gray-700 uppercase tracking-wider">
                 <tr>
                     <th class="px-4 py-2">Order ID</th>
@@ -23,7 +23,7 @@
             <tbody class="divide-y divide-gray-100">
                 @forelse ($orders as $order)
                     <tr class="hover:bg-gray-50">
-                        <td class="px-4 py-2">{{ $order->id }}</td>
+                        <td class="px-6 py-4">{{ $order->id }}</td>
                         <td class="px-4 py-2">{{ $order->product->title }}</td>
                         <td class="px-4 py-2">{{ $order->quantity }}</td>
                         <td class="px-4 py-2">${{ number_format($order->price_per_item, 2) }}</td>

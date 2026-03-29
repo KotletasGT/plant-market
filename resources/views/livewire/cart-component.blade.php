@@ -59,7 +59,7 @@
 
                     <tr class="bg-gray-50">
                         <td colspan="5" class="px-4 py-4">
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="shipping-address-grid grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
                                     <input

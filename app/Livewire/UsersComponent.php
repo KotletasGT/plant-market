@@ -9,7 +9,9 @@ class UsersComponent extends Component
 {
     public function render()
     {
-        $users = User::all();
+        $users = User::withCount('products')
+                     ->withSum('orders', 'quantity')
+                     ->get();
 
         return view('livewire.users-component', compact('users'))->layout('components.layouts.admin');
     }
