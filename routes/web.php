@@ -16,6 +16,7 @@ use App\Livewire\AdminOverview;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\PaymentController;
 use App\Livewire\UsersComponent;
+use App\Http\Controllers\OrderController;
 
 /*Route::get('/', function () {
     //return view('welcome');
@@ -47,6 +48,7 @@ Route::middleware('auth:admin')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/user/add-product', \App\Livewire\UserAddProductComponent::class)->name('user.add-product');
     Route::get('/cart', CartComponent::class)->name('cart');
+    Route::get('/order/confirm/{orderId}', [OrderController::class, 'confirm'])->name('order.confirm')->middleware('signed');
 });
 
 //Route::get('/cart', function () {
@@ -58,6 +60,8 @@ Route::get('/', BrowseProductsComponent::class)->name('products.browse');
 Route::get('/product/{id}', SingleProductComponent::class)->name('product.show'); //idk
 
 Route::get('/category/{id}', [CategoryController::class, 'index'])->name('category.show');
+
+Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', CartComponent::class)->name('cart');

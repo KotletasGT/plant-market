@@ -41,7 +41,7 @@ class UserAddProductComponent extends Component
         $this->validate([
             'title' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'description' => 'required|string',
+            'description' => 'required|string|max:1024',
             'image' => 'required|image|max:2048' //2mb upload
         ]);
 

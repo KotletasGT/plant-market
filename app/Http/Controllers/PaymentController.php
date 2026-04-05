@@ -7,6 +7,9 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmationMail;
+use App\Mail\SellerOrderNotificationMail;
 
 class PaymentController extends Controller
 {
@@ -19,7 +22,7 @@ class PaymentController extends Controller
         }
 
         DB::transaction(function () use ($orderIds) {
-            $orders = Order::whereIn('id', $orderIds)->where('user_id', Auth::id())->get();
+            $orders = Order::whereIn('id', $orderIds)->where('user_id', Auth::id())->with('product.user', 'user')->get();
 
             foreach ($orders as $order) {
                 // Update stock
@@ -33,6 +36,17 @@ class PaymentController extends Controller
                 // Mark as paid
                 $order->status = 'paid';
                 $order->save();
+
+                // Send confirmation email to buyer
+                Mail::to($order->user->email)->send(new OrderConfirmationMail($order));
+
+                // Send notification to seller if product is added by user (not admin)
+                if ($order->product->user_id) {
+                    $seller = $order->product->user;
+                    if ($seller) {
+                        Mail::to($seller->email)->send(new SellerOrderNotificationMail($order));
+                    }
+                }
             }
         });
 

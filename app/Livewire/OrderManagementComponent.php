@@ -8,6 +8,8 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderApprovedMail;
+use App\Mail\OrderConfirmationMail;
+use App\Mail\SellerOrderNotificationMail;
 
 class OrderManagementComponent extends Component
 {
@@ -21,11 +23,16 @@ class OrderManagementComponent extends Component
 
         $order->update(['status' => 'approved']);
 
-// emeilui (TO-DO)
+        // Send confirmation email to buyer
+//        Mail::to($order->user->email)->send(new OrderConfirmationMail($order));
 
-        Mail::to($order->user->email)->send(new OrderApprovedMail($order));
+        // Send notification to seller if product is added by user (not admin)
+//        if ($order->product->user_id) {
+//            $seller = $order->product->user;
+//            Mail::to($seller->email)->send(new SellerOrderNotificationMail($order));
+//        }
 
-        session()->flash('message', "Order #{$order->id} approved successfully, and the user has been notified.");
+        session()->flash('message', "Order #{$order->id} approved successfully, and notifications sent.");
 
     } else {
 
