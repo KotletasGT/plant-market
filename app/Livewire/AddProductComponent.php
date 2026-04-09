@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Product;
 use App\Models\Category;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
+use Illuminate\Support\Facades\Http;
 
 class AddProductComponent extends Component
 {
@@ -51,6 +52,39 @@ class AddProductComponent extends Component
 	'image' => 'required|image|max:2048' //2mb uploadui    
 
 	]);
+
+        $userDescription = $this->description;
+
+        $prompt = "Write a concise plant care guide (max 100 words) for a beginner who just bought a {$this->title}. Include light, watering, and temperature. Be practical and clear.";
+
+        $apiKey = config('services.gemini.api_key');
+
+        if ($apiKey) {
+            try {
+                $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . $apiKey;
+                $response = Http::post($url, [
+                    'contents' => [
+                        [
+                            'parts' => [
+                                ['text' => $prompt]
+                            ]
+                        ]
+                    ]
+                ]);
+
+                if ($response->successful()) {
+                    $data = $response->json();
+                    $careGuide = $data['candidates'][0]['content']['parts'][0]['text'] ?? '';
+                    $this->description = $userDescription . "\n\n" . $careGuide;
+                } else {
+                    $this->description = $userDescription;
+                }
+            } catch (\Exception $e) {
+                $this->description = $userDescription;
+            }
+        } else {
+            $this->description = $userDescription;
+        }
 
         $path = $this->image->store('products', 'public');
 

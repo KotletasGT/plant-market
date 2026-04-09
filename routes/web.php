@@ -61,8 +61,6 @@ Route::get('/product/{id}', SingleProductComponent::class)->name('product.show')
 
 Route::get('/category/{id}', [CategoryController::class, 'index'])->name('category.show');
 
-Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', CartComponent::class)->name('cart');
 });

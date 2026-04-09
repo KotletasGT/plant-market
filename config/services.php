@@ -42,5 +42,8 @@ return [
         'cancel_url' => env('STRIPE_CANCEL_URL'),
     ],
 
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY'),
+    ],
 
 ];
