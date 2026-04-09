@@ -40,4 +40,8 @@
             </tbody>
         </table>
     </div>
+
+    <div class="mt-6 flex justify-center">
+        {{ $users->links() }}
+    </div>
 </div>

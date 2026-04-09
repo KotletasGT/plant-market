@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Product;
 use App\Models\Category;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
@@ -10,11 +11,11 @@ use Illuminate\Support\Facades\Http;
 
 class AddProductComponent extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
 
     public $title, $description, $price, $image, $categories, $category_id;
-
-    public $products;
 
     public $stockValues = [];
     public $editTitle = [];
@@ -28,10 +29,10 @@ class AddProductComponent extends Component
     {
 
         $this->categories = Category::all();
-        $this->products = Product::with('category')->get();
-        $this->stockValues = $this->products->pluck('stock', 'id')->toArray();
+        $allProducts = Product::with('category')->get();
+        $this->stockValues = $allProducts->pluck('stock', 'id')->toArray();
 
-        foreach ($this->products as $product) {
+        foreach ($allProducts as $product) {
         $this->editTitle[$product->id] = $product->title;
         $this->editDescription[$product->id] = $product->description;
         $this->editPrice[$product->id] = $product->price;
@@ -55,7 +56,7 @@ class AddProductComponent extends Component
 
         $userDescription = $this->description;
 
-        $prompt = "Write a concise plant care guide (max 100 words) for a beginner who just bought a {$this->title}. Include light, watering, and temperature. Be practical and clear.";
+        $prompt = "Write a concise plant care guide (max 100 words) for a beginner who just bought a {$this->title}. Include light, watering, and temperature. Be practical and clear. Do not leave extra space between bullet points. The entire response will be used as description for the plant. If the plant name is in Lithuanian answer in that language. If it is not a plant answer - plant with this name unknown";
 
         $apiKey = config('services.gemini.api_key');
 
@@ -131,10 +132,10 @@ class AddProductComponent extends Component
 
   private function refreshData()
     {
-        $this->products = Product::with('category')->get();
-        $this->stockValues = $this->products->pluck('stock', 'id')->toArray();
+        $allProducts = Product::with('category')->get();
+        $this->stockValues = $allProducts->pluck('stock', 'id')->toArray();
 
-        foreach ($this->products as $product) {
+        foreach ($allProducts as $product) {
             $this->editTitle[$product->id] = $product->title;
             $this->editDescription[$product->id] = $product->description;
             $this->editPrice[$product->id] = $product->price;
@@ -145,8 +146,8 @@ class AddProductComponent extends Component
     public function render()
 
     {
-
-        return view('livewire.add-product-component')->layout('components.layouts.admin');
+        $products = Product::with('category')->paginate(4);
+        return view('livewire.add-product-component', ['products' => $products])->layout('components.layouts.admin');
 
     }
 

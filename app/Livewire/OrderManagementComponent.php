@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Order;
 use App\Models\Category;
 use App\Models\Product;
@@ -13,8 +14,11 @@ use App\Mail\SellerOrderNotificationMail;
 
 class OrderManagementComponent extends Component
 {
-    public function approveOrder($orderId)
+    use WithPagination;
 
+    protected $paginationTheme = 'tailwind';
+
+    public function approveOrder($orderId)
     {
 
         $order = Order::with(['user', 'product'])->find($orderId);
@@ -47,18 +51,13 @@ class OrderManagementComponent extends Component
     {
 
         $order = Order::find($orderId);
-
         $order->delete();
-        
+        $this->resetPage();
         session()->flash('message', 'Order deleted successfully!');
-
     }
 
     public function render()
-
     {
-
-        return view('livewire.order-management-component', ['orders' => Order::with('product', 'user')->get()])->layout('components.layouts.admin');
-
+        return view('livewire.order-management-component', ['orders' => Order::with('product', 'user')->orderByDesc('created_at')->paginate(15)])->layout('components.layouts.admin');
     }
 }

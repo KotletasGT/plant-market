@@ -3,59 +3,37 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Category;
 
 class CategoryComponent extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'tailwind';
+
     public $name;
 
-    public $categories;
-
-    public function mount()
-
-    {
-
-        $this->categories = Category::all();
-
-    }
-
     public function saveCategory()
-
     {
-
         $this->validate(['name' => 'required|string|max:255']);
-
         Category::create(['name' => $this->name]);
-
         $this->name = '';
-
-        $this->categories = Category::all();
-
+        $this->resetPage();
         session()->flash('message', 'Category added successfully!');
-
     }
 
     public function deleteCategory($id)
-
     {
-
         Category::findOrFail($id)->delete();
-
-        $this->categories = Category::all();
-
+        $this->resetPage();
         session()->flash('message', 'Category deleted successfully!');
-
     }
 
     public function render()
-
     {
-
         return view('livewire.category-component', [
-
-            'categories' => $this->categories,
-
+            'categories' => Category::orderBy('name')->paginate(10),
         ])->layout('components.layouts.admin');
-
     }
 }

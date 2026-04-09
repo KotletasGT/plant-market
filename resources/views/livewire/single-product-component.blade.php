@@ -8,12 +8,16 @@
 
     <div class="flex flex-col md:flex-row items-start gap-10">
         <!-- Product Image -->
-        <div class="w-full md:w-1/2">
-            <img
-                src="{{ asset('storage/' . $product->image) }}"
-                alt="{{ $product->title }}"
-                class="w-full h-auto rounded-xl border border-gray-200 shadow-sm"
-            >
+        <div class="w-full flex justify-center">
+            <div class="w-[1000px] h-[600px] overflow-hidden rounded-xl border border-gray-200 shadow-sm bg-gray-50 flex items-center">
+                <img
+                    src="{{ asset('storage/' . $product->image) }}"
+                    alt="{{ $product->title }}"
+                    width="1200"
+                    height="600"
+                    style="width:1200px;height:600px;object-fit:contain;padding-left:80px;"
+                >
+            </div>
         </div>
 
         <!-- Product Details -->
@@ -26,7 +30,7 @@
 
             <p class="text-sm text-gray-500">Added by: {{ $adder }}</p>
 
-            <p class="text-gray-600">{{ $product->description }}</p>
+            <p class="text-gray-600">{!! nl2br(e($product->description)) !!}</p>
 
             <p class="text-lg text-gray-700">In Stock: 
                 <span class="font-semibold">{{ $product->stock }}</span>
@@ -65,7 +69,7 @@
                         <textarea
                             wire:model="comment"
                             placeholder="Optional comment..."
-                            class="w-full border border-gray-300 rounded px-4 py-2 resize-none focus:ring-2 focus:ring-blue-500"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 resize-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                             rows="3"
                         ></textarea>
 

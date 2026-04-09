@@ -4,14 +4,20 @@ namespace App\Livewire;
 
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class UsersComponent extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'tailwind';
+
     public function render()
     {
         $users = User::withCount('products')
                      ->withSum('orders', 'quantity')
-                     ->get();
+                     ->orderBy('name')
+                     ->paginate(10);
 
         return view('livewire.users-component', compact('users'))->layout('components.layouts.admin');
     }

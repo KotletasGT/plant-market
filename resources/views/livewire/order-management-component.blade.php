@@ -64,4 +64,8 @@
         </table>
     </div>
 
+    <div class="mt-6 flex justify-center">
+        {{ $orders->links() }}
+    </div>
+
 </div>
