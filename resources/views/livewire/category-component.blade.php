@@ -26,11 +26,12 @@
 
     <ul class="divide-y divide-gray-200">
         @forelse ($categories as $category)
-        <li class="py-2 flex justify-between items-center text-gray-700">
-            <span>{{ $category->name }}</span>
+        <li class="py-2 flex items-center text-gray-700">
+            <span>{{ $category->name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">{{ $category->products_count }} {{ $category->products_count === 1 ? 'product' : 'products' }}</span>
             <button
                 wire:click="deleteCategory({{ $category->id }})"
-                class="text-red-600 hover:text-red-800 text-sm font-medium"
+                class="text-red-600 hover:text-red-800 text-sm font-medium ml-4"
             >
                 Remove
             </button>

@@ -56,6 +56,7 @@
 
             <!-- Rating Form -->
             @if(auth()->check())
+                @if($this->canUserReview())
                 <div class="pt-6 border-t mt-6">
                     <h3 class="text-lg font-semibold mb-2">Leave a Review</h3>
                     <form wire:submit.prevent="submitReview" class="space-y-4">
@@ -81,6 +82,13 @@
                         </button>
                     </form>
                 </div>
+                @else
+                <div class="pt-6 border-t mt-6 bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                    <p class="text-sm text-yellow-800">
+                        You can only leave a review for products you have ordered and paid for. Your eligible orders will appear here after they are approved.
+                    </p>
+                </div>
+                @endif
             @else
                 <p class="mt-4 text-sm text-gray-500">
                     You must <a href="{{ route('login') }}" class="text-blue-600 underline">log in</a> to leave a review.

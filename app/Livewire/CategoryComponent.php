@@ -33,7 +33,7 @@ class CategoryComponent extends Component
     public function render()
     {
         return view('livewire.category-component', [
-            'categories' => Category::orderBy('name')->paginate(10),
+            'categories' => Category::withCount('products')->orderBy('name')->paginate(10),
         ])->layout('components.layouts.admin');
     }
 }

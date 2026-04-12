@@ -82,6 +82,18 @@ class SingleProductComponent extends Component
 
     }
 
+    public function canUserReview()
+    {
+        if (!auth()->check()) {
+            return false;
+        }
+
+        return \App\Models\Order::where('user_id', auth()->id())
+            ->where('product_id', $this->product->id)
+            ->whereIn('status', ['paid', 'approved'])
+            ->exists();
+    }
+
     public function submitReview()
 
     {
@@ -92,6 +104,11 @@ class SingleProductComponent extends Component
 
         return;
 
+    }
+
+    if (!$this->canUserReview()) {
+        session()->flash('error', 'You can only review products that you have ordered and paid for.');
+        return;
     }
 
     $this->validate([
