@@ -7,6 +7,18 @@
         </div>
     @endif
 
+    <div class="d-flex justify-content-end mb-3">
+        <select wire:model.live="sortOption" class="form-select w-auto">
+            <option value="">Default</option>
+            <option value="price_asc">Cheapest First</option>
+            <option value="price_desc">Most Expensive First</option>
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="rating_asc">Lowest Rated First</option>
+            <option value="rating_desc">Highest Rated First</option>
+        </select>
+    </div>
+
     <div class="row g-2">
         @forelse ($products as $product)
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-3 d-flex justify-content-center">

@@ -40,13 +40,7 @@
           </a>
 
           <div class="d-flex align-items-center">
-            <a href="{{route('cart')}}">
-            <div class="theme-wrap me-3">
-              <div class="theme-icon-wrap">
-                <i class="bi-cart-fill me-1"></i>
-              </div>
-            </div>
-        </a>
+            <livewire:cart-badge />
           </div>
         </div>
 

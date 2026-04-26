@@ -55,6 +55,7 @@ class BrowseProductsComponent extends Component
         session()->put('cart', $cart);
 
         session()->flash('message', "{$product->title} added to cart.");
+        $this->dispatch('cartUpdated');
 
     }
 
@@ -68,6 +69,14 @@ class BrowseProductsComponent extends Component
             $products->orderBy('price', 'asc');
         } elseif ($this->sortOption === 'price_desc') {
             $products->orderBy('price', 'desc');
+        } elseif ($this->sortOption === 'newest') {
+            $products->orderBy('created_at', 'desc');
+        } elseif ($this->sortOption === 'oldest') {
+            $products->orderBy('created_at', 'asc');
+        } elseif ($this->sortOption === 'rating_asc') {
+            $products->where('rating', '>', 0)->orderBy('rating', 'asc');
+        } elseif ($this->sortOption === 'rating_desc') {
+            $products->where('rating', '>', 0)->orderBy('rating', 'desc');
         }
 
         return view('livewire.browse-products-component', [

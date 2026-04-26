@@ -79,6 +79,7 @@ class SingleProductComponent extends Component
         session()->put('cart', $cart);
 
         session()->flash('message', "{$product->title} added to cart.");
+        $this->dispatch('cartUpdated');
 
     }
 
