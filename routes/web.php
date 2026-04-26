@@ -40,6 +40,8 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('/admin/orders', OrderManagementComponent::class)->name('admin.orders');
 
+    Route::get('/admin/moderation', \App\Livewire\ModerationComponent::class)->name('admin.moderation');
+
     Route::get('/admin/users', UsersComponent::class)->name('admin.users');
 
 //    Route::get('/admin/users', UsersComponent::class)->name('admin.users');

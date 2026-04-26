@@ -148,6 +148,12 @@
                                 <textarea wire:model.defer="editDescription.{{ $product->id }}" class="w-full px-3 py-2 border-2 border-gray-300 rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-green-400" rows="2"></textarea>
                             </div>
 
+                            @if(!$product->approved)
+                                <div class="mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded text-yellow-800">
+                                    Listing awaiting approval
+                                </div>
+                            @endif
+
                             <!-- Photo Upload -->
                             <div>
                                 <label class="block text-xs font-semibold text-gray-600 mb-1">Change Photo</label>

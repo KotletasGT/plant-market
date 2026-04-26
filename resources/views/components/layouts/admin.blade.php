@@ -76,6 +76,13 @@
           </li>
 
           <li class="hover">
+            <a href="{{route('admin.moderation')}}" class="">
+              <i class="fa-solid fa-gavel"></i>
+              Moderation
+            </a>
+          </li>
+
+          <li class="hover">
             <a href="{{route('admin.users')}}" class="">
               <i class="fa-solid fa-users"></i>
               Users

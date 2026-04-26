@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->decimal('price', 10, 2);
+            $table->boolean('approved')->default(false);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('image');
             $table->timestamps();

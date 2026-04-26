@@ -105,6 +105,8 @@ class AddProductComponent extends Component
 
             'user_id' => auth('admin')->check() ? auth('admin')->id() : null,
 
+            'approved' => auth('admin')->check() ? true : false,
+
         ]);
 
         $this->reset(['title', 'description', 'price', 'image', 'category_id']);

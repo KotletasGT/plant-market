@@ -8,10 +8,31 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    public function index($id)
+    public function index(Request $request, $id)
     {
-        $products = Product::where('category_id', $id)->get();
+        $category = Category::findOrFail($id);
+        $sort = $request->query('sort', '');
 
-        return view ('category', compact('products'));
+        $products = Product::where('category_id', $id)->where('approved', true);
+
+        if ($sort === 'price_asc') {
+            $products->orderBy('price', 'asc');
+        } elseif ($sort === 'price_desc') {
+            $products->orderBy('price', 'desc');
+        } elseif ($sort === 'newest') {
+            $products->orderBy('created_at', 'desc');
+        } elseif ($sort === 'oldest') {
+            $products->orderBy('created_at', 'asc');
+        } elseif ($sort === 'rating_asc') {
+            $products->where('rating', '>', 0)->orderBy('rating', 'asc');
+        } elseif ($sort === 'rating_desc') {
+            $products->where('rating', '>', 0)->orderBy('rating', 'desc');
+        }
+
+        return view('category', [
+            'products' => $products->get(),
+            'category' => $category,
+            'sort' => $sort,
+        ]);
     }
 }

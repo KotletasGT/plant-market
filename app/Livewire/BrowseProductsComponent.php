@@ -63,7 +63,7 @@ class BrowseProductsComponent extends Component
 
     public function render()
     {
-        $products = Product::query();
+        $products = Product::where('approved', true);
 
         if ($this->sortOption === 'price_asc') {
             $products->orderBy('price', 'asc');

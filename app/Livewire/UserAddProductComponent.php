@@ -89,6 +89,7 @@ class UserAddProductComponent extends Component
             'price' => $this->price,
             'image' => $path,
             'user_id' => auth()->id(),
+            'approved' => false,
         ]);
 
         $this->reset(['title', 'description', 'price', 'image', 'category_id']);
